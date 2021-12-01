@@ -1,14 +1,14 @@
-package aoc
+package main
 
 import (
 	"bufio"
-	"fmt"
 	"io"
-	"os"
 	"strconv"
 )
 
-func intputGeneratorDay1(input io.Reader) ([]int, error) {
+type Day1 struct{}
+
+func (d Day1) InputGenerator(input io.Reader) (interface{}, error) {
 	scanner := bufio.NewScanner(input)
 
 	var output []int
@@ -29,7 +29,9 @@ func intputGeneratorDay1(input io.Reader) ([]int, error) {
 	return output, nil
 }
 
-func solverDay1Part1(input []int) int {
+func (d Day1) SolverPart1(v interface{}) (interface{}, error) {
+	input := v.([]int)
+
 	var c int
 
 	for i := 0; i < len(input)-1; i++ {
@@ -38,35 +40,22 @@ func solverDay1Part1(input []int) int {
 		}
 	}
 
-	return c
+	return c, nil
 }
 
-func solverDay1Part2(input []int) int {
+func (d Day1) SolverPart2(v interface{}) (interface{}, error) {
+	input := v.([]int)
+
 	var s []int
 
 	for i := 0; i < len(input)-2; i++ {
 		s = append(s, input[i]+input[i+1]+input[i+2])
 	}
 
-	return solverDay1Part1(s)
+	return d.SolverPart1(s)
 }
 
 func mainDay1Part1() {
-	f, err := os.Open("./input/day1.txt")
-	if err != nil {
-		panic(err)
-	}
-
-	defer f.Close()
-
-	output, err := intputGeneratorDay1(f)
-	if err != nil {
-		panic(err)
-	}
-
-	a1 := solverDay1Part1(output)
-	fmt.Println("Part 1 : ", a1)
-
-	a2 := solverDay1Part2(output)
-	fmt.Println("Part 2 : ", a2)
+	dr := DayRunner{Day: &Day1{}}
+	dr.Run()
 }
