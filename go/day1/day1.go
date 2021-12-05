@@ -1,4 +1,4 @@
-package main
+package day1
 
 import (
 	"bufio"
@@ -53,9 +53,4 @@ func (d Day1) SolverPart2(v interface{}) (interface{}, error) {
 	}
 
 	return d.SolverPart1(s)
-}
-
-func mainDay1Part1() {
-	dr := DayRunner{Day: &Day1{}}
-	dr.Run()
 }
