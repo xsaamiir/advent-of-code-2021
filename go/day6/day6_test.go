@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"reflect"
 	"testing"
 )
@@ -81,9 +80,6 @@ func TestDay6_SolverPart1(t *testing.T) {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			d := Day6{}
-
-			got2 := numberOfFishAfter(tt.args.v.(LanternfishSchool).Lanternfish, 80)
-			fmt.Println(got2)
 
 			got, err := d.SolverPart1(tt.args.v)
 			if (err != nil) != tt.wantErr {

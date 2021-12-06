@@ -40,15 +40,24 @@ func (s *LanternfishSchool) Tick(days int) {
 	}
 }
 
-func numberOfFishAfter(school []Lanternfish, nDays int) int {
+func (s *LanternfishSchool) SizeAfter(nDays int) int {
 	var days [9]int
 
-	for _, lanternfish := range school {
+	for _, lanternfish := range s.Lanternfish {
 		days[lanternfish.Timer]++
 	}
 
 	for i := 0; i < nDays; i++ {
-		days = tick(days)
+		var next [9]int
+
+		for i := 1; i < 9; i++ {
+			next[i-1] = days[i]
+		}
+
+		next[6] += days[0]
+		next[8] += days[0]
+
+		days = next
 	}
 
 	var sum int
@@ -57,19 +66,6 @@ func numberOfFishAfter(school []Lanternfish, nDays int) int {
 	}
 
 	return sum
-}
-
-func tick(fish [9]int) [9]int {
-	var next [9]int
-
-	for i := 1; i < 9; i++ {
-		next[i-1] = fish[i]
-	}
-
-	next[6] += fish[0]
-	next[8] += fish[0]
-
-	return next
 }
 
 func (s LanternfishSchool) Size() int {
@@ -101,12 +97,11 @@ func (d Day6) InputGenerator(reader io.Reader) (interface{}, error) {
 func (d Day6) SolverPart1(v interface{}) (interface{}, error) {
 	input := v.(LanternfishSchool)
 
-	return numberOfFishAfter(input.Lanternfish, 80), nil
+	return input.SizeAfter(80), nil
 }
 
 func (d Day6) SolverPart2(v interface{}) (interface{}, error) {
 	input := v.(LanternfishSchool)
 
-	fish := numberOfFishAfter(input.Lanternfish, 256)
-	return fish, nil
+	return input.SizeAfter(256), nil
 }
