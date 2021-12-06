@@ -7,8 +7,8 @@ import (
 )
 
 type Day interface {
-	// InputGenerator takes an input the input file and should return
-	// the data type expected by the solver function.
+	// InputGenerator takes the input from the input file and should return
+	// the data type expected by the solver functions.
 	InputGenerator(io.Reader) (interface{}, error)
 	// SolverPart1 takes as an input the output of InputGenerator.
 	SolverPart1(interface{}) (interface{}, error)
@@ -26,7 +26,7 @@ func (d *DayRunner) Run() error {
 		return fmt.Errorf("day number is not set")
 	}
 
-	f, err := os.Open(fmt.Sprintf("./input/day%d.txt", d.Number))
+	f, err := os.Open(fmt.Sprintf("./day%d/day%d.txt", d.Number, d.Number))
 	if err != nil {
 		return err
 	}
